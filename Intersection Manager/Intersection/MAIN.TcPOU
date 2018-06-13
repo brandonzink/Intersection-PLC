@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="MAIN" Id="{dc4031c9-85f1-41a8-a356-d5490191f991}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//If all of the lights are currently red, then decide which light to activate based on the state counters as defined in the Glbl varaible list
+IF Glbl.northStraightActive = FALSE AND Glbl.northLeftActive = FALSE AND Glbl.southStraightActive = FALSE AND Glbl.southLeftActive = FALSE AND Glbl.eastStraightActive = FALSE AND Glbl.eastLeftActive = FALSE AND Glbl.westStraightActive = FALSE AND Glbl.westLeftActive = FALSE THEN
+	IF Glbl.state1Counter = maximum() THEN //Turn on North and South Straight lights
+		Glbl.northStraightActive := TRUE;
+		Glbl.southStraightActive := TRUE;
+		Glbl.state1Counter := 0;
+	ELSIF Glbl.state2Counter = maximum() THEN //Turn on East and West Straight lights
+		Glbl.eastStraightActive := TRUE;
+		Glbl.westStraightActive := TRUE;
+		Glbl.state2Counter := 0;
+	ELSIF Glbl.state3Counter = maximum() THEN //Turn on North and South left lights
+		Glbl.northLeftActive := TRUE;
+		Glbl.southLeftActive := TRUE;
+		Glbl.state3Counter := 0;
+	ELSIF Glbl.state4Counter = maximum() THEN //Turn on East and West Left lights
+		Glbl.eastStraightActive := TRUE;
+		Glbl.westStraightActive := TRUE;
+		Glbl.state4Counter := 0;
+	ELSIF Glbl.state5Counter = maximum() THEN //Turn on North Left and Straight lights
+		Glbl.northStraightActive := TRUE;
+		Glbl.northLeftActive := TRUE;
+		Glbl.state5Counter := 0;
+	ELSIF Glbl.state6Counter = maximum() THEN //Turn on South Left and Straight lights
+		Glbl.southStraightActive := TRUE;
+		Glbl.southLeftActive := TRUE;
+		Glbl.state6Counter := 0;
+	ELSIF Glbl.state7Counter = maximum() THEN //Turn on East Left and Straight lights
+		Glbl.eastStraightActive := TRUE;
+		Glbl.eastLeftActive := TRUE;
+		Glbl.state7Counter := 0;
+	ELSIF Glbl.state8Counter = maximum() THEN //Turn on West Left and Straight lights
+		Glbl.westStraightActive := TRUE;
+		Glbl.westLeftActive := TRUE;
+		Glbl.state8Counter := 0;
+	END_IF
+END_IF
+
+//Call each of the lights POUs
+NorthLight_Control();
+SouthLight_Control();
+EastLight_Control();
+WestLight_Control();]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="8" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

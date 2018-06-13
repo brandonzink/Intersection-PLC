@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="EastLight_Control" Id="{fe0bff93-cc6c-4ddd-99ef-fa341727e6d2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM EastLight_Control
+VAR
+	StraightGreenLight  : BOOL := FALSE;	//Controls if the green light is on
+	StraightYellowLight : BOOL := FALSE;	//Controls if the yellow light is on
+	StraightRedLight    : BOOL := TRUE; 	//Controls if the red light is on
+	
+	StraightOnTimer : INT := 0;				//Tracks how long the light has been on
+	
+	LeftGreenLight  : BOOL := FALSE;		//Controls if the green light is on
+	LeftYellowLight : BOOL := FALSE;		//Controls if the yellow light is on
+	leftRedLight    : BOOL := TRUE; 		//Controls if the red light is on
+	
+	LeftOnTimer : INT := 0;					//Tracks how long the light has been on
+	
+	CrosswalkLight : BOOL := FALSE;			//Controls if the crosswalk light is on (walk=TRUE)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Control for the straight light if active
+IF Glbl.eastStraightActive = TRUE THEN			//If the straight light is set to be active
+	IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
+		Glbl.state2Counter := Glbl.state2Counter - (Glbl.state2Counter/2);
+		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);		
+	END_IF
+	IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+		StraightGreenLight := TRUE;
+		StraightYellowLight := FALSE;
+		StraightRedLight := FALSE;
+		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		Glbl.eastStraightSensor := FALSE;		//Set the sensor to false
+	ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		StraightGreenLight := FALSE;
+		StraightYellowLight := TRUE;
+		StraightRedLight := FALSE;
+		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+	ELSE										//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		StraightGreenLight := FALSE;
+		StraightYellowLight := FALSE;
+		StraightRedLight := TRUE;
+		Glbl.eastStraightActive := FALSE;
+		StraightOnTimer := 0;	
+	END_IF
+END_IF
+
+//Control for the left light if active
+IF Glbl.eastLeftActive = TRUE THEN			//If the left light is set to be active
+	IF LeftOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
+		Glbl.state4Counter := Glbl.state4Counter - (Glbl.state4Counter/2);
+		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);	
+	END_IF
+	IF LeftOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+		LeftGreenLight := TRUE;
+		LeftYellowLight := FALSE;
+		LeftRedLight := FALSE;
+		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		Glbl.eastLeftSensor := FALSE; 		//Set the sensor to false
+	ELSIF LeftOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		LeftGreenLight := FALSE;
+		LeftYellowLight := TRUE;
+		LeftRedLight := FALSE;
+		LeftOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+	ELSE									//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		LeftGreenLight := FALSE;
+		LeftYellowLight := FALSE;
+		LeftRedLight := TRUE;
+		Glbl.eastLeftActive := FALSE;
+		LeftOnTimer := 0;	
+	END_IF
+END_IF
+
+//If the sensor is on and the light is off, incirment the waiting counters
+IF Glbl.eastStraightSensor = TRUE AND Glbl.eastStraightActive = FALSE THEN
+	Glbl.state2Counter := Glbl.state2Counter + 1;
+	Glbl.state7Counter := Glbl.state7Counter + 1;
+END_IF
+IF Glbl.southLeftSensor = TRUE AND Glbl.southLeftActive = FALSE THEN
+	Glbl.state4Counter := Glbl.state4Counter + 1;
+	Glbl.state7Counter := Glbl.state7Counter + 1;
+END_IF
+
+//Check to see if the crosswalk can be turned on
+IF (Glbl.northStraightActive = TRUE AND Glbl.southStraightActive = TRUE) OR (Glbl.southStraightActive = TRUE AND Glbl.southLeftActive = TRUE) THEN
+	CrosswalkLight := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="EastLight_Control">
+      <LineId Id="6" Count="64" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

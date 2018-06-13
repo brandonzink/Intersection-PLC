@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <GVL Name="Glbl" Id="{512b2143-b348-434c-ac7d-e0a822d68c50}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	//These track if the lights are on (green/yellow) and are updated in the individual POUs
+	northStraightActive : BOOL := FALSE;
+	northLeftActive     : BOOL := FALSE;
+	southStraightActive : BOOL := FALSE;
+	southLeftActive     : BOOL := FALSE;
+	eastStraightActive  : BOOL := FALSE;
+	eastLeftActive      : BOOL := FALSE;
+	westStraightActive  : BOOL := FALSE;
+	westLeftActive      : BOOL := FALSE;
+	
+	//These track the 'how long waiting' for each light combo (state)
+	state1Counter : DINT := 0; //North Straight and South Straight
+	state2Counter : DINT := 0; //East Straight and West Straight
+	state3Counter : DINT := 0; //North Left and South Left
+	state4Counter : DINT := 0; //East Left and West Left
+	state5Counter : DINT := 0; //North Straight and Left
+	state6Counter : DINT := 0; //South Straight and Left
+	state7Counter : DINT := 0; //East Straight and Left
+	state8Counter : DINT := 0; //West Straight and Left
+	
+	//Sensors that indicate 'there is a car here'
+	northStraightSensor : BOOL := FALSE;
+	northLeftSensor     : BOOL := FALSE;
+	southStraightSensor : BOOL := FALSE;
+	southLeftSensor     : BOOL := FALSE;
+	eastStraightSensor  : BOOL := FALSE;
+	eastLeftSensor      : BOOL := FALSE;
+	westStraightSensor  : BOOL := FALSE;
+	westLeftSensor      : BOOL := FALSE;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

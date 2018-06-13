@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="maximum" Id="{59ca9b71-0d0a-41a3-9b92-9bb620fb7ead}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION maximum : DINT
+VAR_INPUT
+END_VAR
+VAR
+	temp : DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[temp := MAX(Glbl.state1Counter, Glbl.state2Counter);
+temp := MAX(Glbl.state3Counter, temp);
+temp := MAX(Glbl.state4Counter, temp);
+temp := MAX(Glbl.state5Counter, temp);
+temp := MAX(Glbl.state6Counter, temp);
+temp := MAX(Glbl.state7Counter, temp);
+temp := MAX(Glbl.state8Counter, temp);
+maximum := temp;]]></ST>
+    </Implementation>
+    <LineIds Name="maximum">
+      <LineId Id="20" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

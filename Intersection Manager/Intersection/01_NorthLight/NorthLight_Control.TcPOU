@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="NorthLight_Control" Id="{934537e3-63a4-40c0-986a-6c025fb28c9d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM NorthLight_Control
+VAR
+	StraightGreenLight  : BOOL := FALSE;	//Controls if the green light is on
+	StraightYellowLight : BOOL := FALSE;	//Controls if the yellow light is on
+	StraightRedLight    : BOOL := TRUE; 	//Controls if the red light is on
+	
+	StraightOnTimer : INT := 0;				//Tracks how long the light has been on
+	
+	LeftGreenLight  : BOOL := FALSE;		//Controls if the green light is on
+	LeftYellowLight : BOOL := FALSE;		//Controls if the yellow light is on
+	leftRedLight    : BOOL := TRUE; 		//Controls if the red light is on
+	
+	LeftOnTimer : INT := 0;					//Tracks how long the light has been on
+	
+	CrosswalkLight : BOOL := FALSE;			//Controls if the crosswalk light is on (walk=TRUE)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Control for the straight light if active
+IF Glbl.northStraightActive = TRUE THEN			//If the straight light is set to be active
+	IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
+		Glbl.state1Counter := Glbl.state1Counter - (Glbl.state1Counter/2);
+		Glbl.state5Counter := Glbl.state5Counter - (Glbl.state5Counter/2);		
+	END_IF
+	IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+		StraightGreenLight := TRUE;
+		StraightYellowLight := FALSE;
+		StraightRedLight := FALSE;
+		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		Glbl.northStraightSensor := FALSE;		//Set the sensor to false
+	ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		StraightGreenLight := FALSE;
+		StraightYellowLight := TRUE;
+		StraightRedLight := FALSE;
+		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+	ELSE										//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		StraightGreenLight := FALSE;
+		StraightYellowLight := FALSE;
+		StraightRedLight := TRUE;
+		Glbl.northStraightActive := FALSE;
+		StraightOnTimer := 0;	
+	END_IF
+END_IF
+
+//Control for the left light if active
+IF Glbl.northLeftActive = TRUE THEN			//If the left light is set to be active
+	IF LeftOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
+		Glbl.state3Counter := Glbl.state3Counter - (Glbl.state3Counter/2);
+		Glbl.state5Counter := Glbl.state5Counter - (Glbl.state5Counter/2);	
+	END_IF
+	IF LeftOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+		LeftGreenLight := TRUE;
+		LeftYellowLight := FALSE;
+		LeftRedLight := FALSE;
+		LeftOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		Glbl.northLeftSensor := FALSE; 		//Set the sensor to false
+	ELSIF LeftOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		LeftGreenLight := FALSE;
+		LeftYellowLight := TRUE;
+		LeftRedLight := FALSE;
+		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
+	ELSE									//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		LeftGreenLight := FALSE;
+		LeftYellowLight := FALSE;
+		LeftRedLight := TRUE;
+		Glbl.northLeftActive := FALSE;
+		LeftOnTimer := 0;	
+	END_IF
+END_IF
+
+//If the sensor is on and the light is off, incirment the waiting counters
+IF Glbl.northStraightSensor = TRUE AND Glbl.northStraightActive = FALSE THEN
+	Glbl.state1Counter := Glbl.state1Counter + 1;
+	Glbl.state5Counter := Glbl.state5Counter + 1;
+END_IF
+IF Glbl.northLeftSensor = TRUE AND Glbl.northLeftActive = FALSE THEN
+	Glbl.state3Counter := Glbl.state3Counter + 1;
+	Glbl.state5Counter := Glbl.state5Counter + 1;
+END_IF
+
+//Check to see if the crosswalk can be turned on
+IF (Glbl.eastStraightActive = TRUE AND Glbl.westStraightActive = TRUE) OR (Glbl.eastStraightActive = TRUE AND Glbl.eastLeftActive = TRUE) THEN
+	CrosswalkLight := TRUE;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="NorthLight_Control">
+      <LineId Id="57" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="41" Count="3" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="45" Count="3" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="49" Count="4" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="83" Count="2" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="88" Count="2" />
+      <LineId Id="66" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
