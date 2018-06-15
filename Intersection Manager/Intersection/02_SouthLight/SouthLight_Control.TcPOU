@@ -19,37 +19,42 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Control for the straight light if active
+      <ST><![CDATA[//If all of the sensors and lights are off, default to N/S straight
+IF Glbl.northStraightSensor = FALSE AND  Glbl.northLeftSensor = FALSE AND Glbl.southStraightSensor = FALSE AND Glbl.southLeftSensor = FALSE AND Glbl.eastStraightSensor = FALSE AND Glbl.eastLeftSensor = FALSE AND Glbl.westStraightSensor = FALSE AND Glbl.westLeftSensor = FALSE AND  Glbl.northLeftActive = FALSE AND Glbl.southLeftActive = FALSE AND Glbl.eastStraightActive = FALSE AND Glbl.eastLeftActive = FALSE AND Glbl.westStraightActive = FALSE AND Glbl.westLeftActive = FALSE THEN
+	StraightRedLight := FALSE;
+	StraightGreenLight := TRUE;
+ELSE //Control for the straight light if active
 IF Glbl.southStraightActive = TRUE THEN			//If the straight light is set to be active
-	IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		Glbl.state1Counter := Glbl.state1Counter - (Glbl.state1Counter/2);
-		Glbl.state6Counter := Glbl.state6Counter - (Glbl.state6Counter/2);		
-	END_IF
-	IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
-		StraightGreenLight := TRUE;
-		StraightYellowLight := FALSE;
-		StraightRedLight := FALSE;
-		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
-		Glbl.southStraightSensor := FALSE;		//Set the sensor to false
-	ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
-		StraightGreenLight := FALSE;
-		StraightYellowLight := TRUE;
-		StraightRedLight := FALSE;
-		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
-	ELSE										//Once it is done, turn it to red and set it as inactive, reset timer to 0
-		StraightGreenLight := FALSE;
-		StraightYellowLight := FALSE;
-		StraightRedLight := TRUE;
-		Glbl.southStraightActive := FALSE;
-		StraightOnTimer := 0;	
+		IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
+			Glbl.state1Counter := Glbl.state1Counter - (Glbl.state1Counter/2);
+			Glbl.state6Counter := Glbl.state6Counter - (Glbl.state6Counter/2);		
+		END_IF
+		IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+			StraightGreenLight := TRUE;
+			StraightYellowLight := FALSE;
+			StraightRedLight := FALSE;
+			StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+			Glbl.southStraightSensor := FALSE;		//Set the sensor to false
+		ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+			StraightGreenLight := FALSE;
+			StraightYellowLight := TRUE;
+			StraightRedLight := FALSE;
+			StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		ELSE										//Once it is done, turn it to red and set it as inactive, reset timer to 0
+			StraightGreenLight := FALSE;
+			StraightYellowLight := FALSE;
+			StraightRedLight := TRUE;
+			Glbl.southStraightActive := FALSE;
+			StraightOnTimer := 0;	
+		END_IF
 	END_IF
 END_IF
 
 //Control for the left light if active
 IF Glbl.southLeftActive = TRUE THEN			//If the left light is set to be active
 	IF LeftOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		Glbl.state3Counter := Glbl.state3Counter - (Glbl.state3Counter/2);
-		Glbl.state6Counter := Glbl.state6Counter - (Glbl.state6Counter/2);	
+		//Glbl.state3Counter := Glbl.state3Counter - (Glbl.state3Counter/2);
+		//Glbl.state6Counter := Glbl.state6Counter - (Glbl.state6Counter/2);	
 	END_IF
 	IF LeftOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
 		LeftGreenLight := TRUE;
@@ -61,7 +66,7 @@ IF Glbl.southLeftActive = TRUE THEN			//If the left light is set to be active
 		LeftGreenLight := FALSE;
 		LeftYellowLight := TRUE;
 		LeftRedLight := FALSE;
-		LeftOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
 	ELSE									//Once it is done, turn it to red and set it as inactive, reset timer to 0
 		LeftGreenLight := FALSE;
 		LeftYellowLight := FALSE;
@@ -73,8 +78,8 @@ END_IF
 
 //If the sensor is on and the light is off, incirment the waiting counters
 IF Glbl.southStraightSensor = TRUE AND Glbl.southStraightActive = FALSE THEN
-	Glbl.state1Counter := Glbl.state1Counter + 1;
-	Glbl.state6Counter := Glbl.state6Counter + 1;
+	//Glbl.state1Counter := Glbl.state1Counter + 1;
+	//Glbl.state6Counter := Glbl.state6Counter + 1;
 END_IF
 IF Glbl.southLeftSensor = TRUE AND Glbl.southLeftActive = FALSE THEN
 	Glbl.state3Counter := Glbl.state3Counter + 1;
@@ -84,14 +89,24 @@ END_IF
 //Check to see if the crosswalk can be turned on
 IF (Glbl.eastStraightActive = TRUE AND Glbl.westStraightActive = TRUE) OR (Glbl.westStraightActive = TRUE AND Glbl.westLeftActive = TRUE) THEN
 	CrosswalkLight := TRUE;
+ELSE
+	CrosswalkLight := FALSE;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="SouthLight_Control">
+      <LineId Id="107" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="108" Count="0" />
       <LineId Id="19" Count="4" />
       <LineId Id="83" Count="0" />
-      <LineId Id="25" Count="24" />
+      <LineId Id="25" Count="18" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="44" Count="5" />
       <LineId Id="84" Count="0" />
       <LineId Id="50" Count="32" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="101" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

@@ -12,31 +12,31 @@ IF Glbl.northStraightActive = FALSE AND Glbl.northLeftActive = FALSE AND Glbl.so
 		Glbl.northStraightActive := TRUE;
 		Glbl.southStraightActive := TRUE;
 		Glbl.state1Counter := 0;
-	ELSIF Glbl.state2Counter = maximum() THEN //Turn on East and West Straight lights
+	ELSIF Glbl.state2Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.eastStraightSensor = TRUE) THEN //Turn on East and West Straight lights
 		Glbl.eastStraightActive := TRUE;
 		Glbl.westStraightActive := TRUE;
 		Glbl.state2Counter := 0;
-	ELSIF Glbl.state3Counter = maximum() THEN //Turn on North and South left lights
+	ELSIF Glbl.state3Counter = maximum() AND (Glbl.northLeftSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on North and South left lights
 		Glbl.northLeftActive := TRUE;
 		Glbl.southLeftActive := TRUE;
 		Glbl.state3Counter := 0;
-	ELSIF Glbl.state4Counter = maximum() THEN //Turn on East and West Left lights
-		Glbl.eastStraightActive := TRUE;
-		Glbl.westStraightActive := TRUE;
+	ELSIF Glbl.state4Counter = maximum() AND (Glbl.westLeftSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East and West Left lights
+		Glbl.eastLeftActive := TRUE;
+		Glbl.westLeftActive := TRUE;
 		Glbl.state4Counter := 0;
-	ELSIF Glbl.state5Counter = maximum() THEN //Turn on North Left and Straight lights
+	ELSIF Glbl.state5Counter = maximum() AND (Glbl.northStraightSensor = TRUE OR Glbl.northLeftSensor = TRUE) THEN //Turn on North Left and Straight lights
 		Glbl.northStraightActive := TRUE;
 		Glbl.northLeftActive := TRUE;
 		Glbl.state5Counter := 0;
-	ELSIF Glbl.state6Counter = maximum() THEN //Turn on South Left and Straight lights
+	ELSIF Glbl.state6Counter = maximum() AND (Glbl.southStraightSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on South Left and Straight lights
 		Glbl.southStraightActive := TRUE;
 		Glbl.southLeftActive := TRUE;
 		Glbl.state6Counter := 0;
-	ELSIF Glbl.state7Counter = maximum() THEN //Turn on East Left and Straight lights
+	ELSIF Glbl.state7Counter = maximum() AND (Glbl.eastStraightSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East Left and Straight lights
 		Glbl.eastStraightActive := TRUE;
 		Glbl.eastLeftActive := TRUE;
 		Glbl.state7Counter := 0;
-	ELSIF Glbl.state8Counter = maximum() THEN //Turn on West Left and Straight lights
+	ELSIF Glbl.state8Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.westLeftSensor = TRUE) THEN //Turn on West Left and Straight lights
 		Glbl.westStraightActive := TRUE;
 		Glbl.westLeftActive := TRUE;
 		Glbl.state8Counter := 0;

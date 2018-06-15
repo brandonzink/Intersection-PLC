@@ -22,8 +22,8 @@ END_VAR
       <ST><![CDATA[//Control for the straight light if active
 IF Glbl.eastStraightActive = TRUE THEN			//If the straight light is set to be active
 	IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		Glbl.state2Counter := Glbl.state2Counter - (Glbl.state2Counter/2);
-		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);		
+		//Glbl.state2Counter := Glbl.state2Counter - (Glbl.state2Counter/2);
+		//Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);		
 	END_IF
 	IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
 		StraightGreenLight := TRUE;
@@ -48,8 +48,8 @@ END_IF
 //Control for the left light if active
 IF Glbl.eastLeftActive = TRUE THEN			//If the left light is set to be active
 	IF LeftOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		Glbl.state4Counter := Glbl.state4Counter - (Glbl.state4Counter/2);
-		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);	
+		//Glbl.state4Counter := Glbl.state4Counter - (Glbl.state4Counter/2);
+		//Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);	
 	END_IF
 	IF LeftOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
 		LeftGreenLight := TRUE;
@@ -61,7 +61,7 @@ IF Glbl.eastLeftActive = TRUE THEN			//If the left light is set to be active
 		LeftGreenLight := FALSE;
 		LeftYellowLight := TRUE;
 		LeftRedLight := FALSE;
-		LeftOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
+		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
 	ELSE									//Once it is done, turn it to red and set it as inactive, reset timer to 0
 		LeftGreenLight := FALSE;
 		LeftYellowLight := FALSE;
@@ -76,7 +76,7 @@ IF Glbl.eastStraightSensor = TRUE AND Glbl.eastStraightActive = FALSE THEN
 	Glbl.state2Counter := Glbl.state2Counter + 1;
 	Glbl.state7Counter := Glbl.state7Counter + 1;
 END_IF
-IF Glbl.southLeftSensor = TRUE AND Glbl.southLeftActive = FALSE THEN
+IF Glbl.eastLeftSensor = TRUE AND Glbl.eastLeftActive = FALSE THEN
 	Glbl.state4Counter := Glbl.state4Counter + 1;
 	Glbl.state7Counter := Glbl.state7Counter + 1;
 END_IF
@@ -84,10 +84,13 @@ END_IF
 //Check to see if the crosswalk can be turned on
 IF (Glbl.northStraightActive = TRUE AND Glbl.southStraightActive = TRUE) OR (Glbl.southStraightActive = TRUE AND Glbl.southLeftActive = TRUE) THEN
 	CrosswalkLight := TRUE;
+ELSE
+	CrosswalkLight := FALSE;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="EastLight_Control">
       <LineId Id="6" Count="64" />
+      <LineId Id="87" Count="1" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
