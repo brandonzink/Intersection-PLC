@@ -13,7 +13,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{C6058BEC-4936-4480-A461-0048EC2E9AF6}" Name="Intersection" PrjFilePath="Intersection\Intersection.plcproj" TmcFilePath="Intersection\Intersection.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Intersection\Intersection.tmc">
 					<Name>Intersection Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<TaskPouOids>

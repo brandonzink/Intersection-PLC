@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="randomSensors" Id="{a16d454e-9d16-4279-ad6c-1b2abb729478}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM randomSensors
+VAR
+	DRAND : DRAND;
+	Seed : INT;
+	Random : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Seed := 57; //Set the seed for the random function to some INT
+DRAND.Seed := Seed;
+DRAND();
+Random := DRAND.Num;
+
+
+IF Random <= 0.200 THEN //Should average once in every 5 seconds (scan time = 1 second, .20/1 probability, 20%
+	IF Random <= 0.025 THEN
+		Glbl.northStraightSensor := TRUE;
+	ELSIF Random <= 0.050 THEN
+		Glbl.northLeftSensor := TRUE;
+	ELSIF Random <= 0.075 THEN
+		Glbl.southStraightSensor := TRUE;
+	ELSIF Random <= 0.100 THEN
+		Glbl.southLeftSensor := TRUE;
+	ELSIF Random <= 0.125 THEN
+		Glbl.eastStraightSensor := TRUE;
+	ELSIF Random <= 0.150 THEN
+		Glbl.eastLeftSensor := TRUE;
+	ELSIF Random <= 0.175 THEN
+		Glbl.westStraightSensor := TRUE;
+	ELSE
+		Glbl.westLeftSensor := TRUE;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="randomSensors">
+      <LineId Id="8" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="13" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

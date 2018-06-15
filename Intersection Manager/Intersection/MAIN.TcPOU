@@ -43,6 +43,12 @@ IF Glbl.northStraightActive = FALSE AND Glbl.northLeftActive = FALSE AND Glbl.so
 	END_IF
 END_IF
 
+//Sets random sensors off
+RandomSensors();
+
+//Maintains the part of the counters that fall through the cracks
+counterMaintenance();
+
 //Call each of the lights POUs
 NorthLight_Control();
 SouthLight_Control();
@@ -78,7 +84,13 @@ WestLight_Control();]]></ST>
       <LineId Id="46" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="51" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="2" />

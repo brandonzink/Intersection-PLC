@@ -21,8 +21,17 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//If all of the sensors and lights are off, default to N/S straight
 IF Glbl.northStraightSensor = FALSE AND  Glbl.northLeftSensor = FALSE AND Glbl.southStraightSensor = FALSE AND Glbl.southLeftSensor = FALSE AND Glbl.eastStraightSensor = FALSE AND Glbl.eastLeftSensor = FALSE AND Glbl.westStraightSensor = FALSE AND Glbl.westLeftSensor = FALSE AND  Glbl.northLeftActive = FALSE AND Glbl.southLeftActive = FALSE AND Glbl.eastStraightActive = FALSE AND Glbl.eastLeftActive = FALSE AND Glbl.westStraightActive = FALSE AND Glbl.westLeftActive = FALSE THEN
+	Glbl.northStraightActive := TRUE;
 	StraightRedLight := FALSE;
 	StraightGreenLight := TRUE;
+	Glbl.state1Counter := 0;
+	Glbl.state2Counter := 0;
+	Glbl.state3Counter := 0;
+	Glbl.state4Counter := 0;
+	Glbl.state5Counter := 0;
+	Glbl.state6Counter := 0;
+	Glbl.state7Counter := 0;
+	Glbl.state8Counter := 0;
 ELSE//Control for the straight light if active
 	IF Glbl.northStraightActive = TRUE THEN			//If the straight light is set to be active
 		IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
@@ -98,7 +107,12 @@ END_IF
       <LineId Id="114" Count="0" />
       <LineId Id="113" Count="0" />
       <LineId Id="57" Count="0" />
+      <LineId Id="134" Count="0" />
       <LineId Id="117" Count="0" />
+      <LineId Id="136" Count="2" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="143" Count="1" />
       <LineId Id="115" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="74" Count="0" />

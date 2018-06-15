@@ -35,7 +35,13 @@
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helper Functions\counterMaintenance.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helper Functions\maximum.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helper Functions\randomSensors.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IntersectionVisual.TcVIS">
