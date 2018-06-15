@@ -34,6 +34,16 @@ VAR_GLOBAL
 	westStraightSensor  : BOOL := FALSE;
 	westLeftSensor      : BOOL := FALSE;
 	
+	//Counters that count the number of cars at a sensor
+	northStraightSensorCnt : INT := 0;
+	northLeftSensorCnt     : INT := 0;
+	southStraightSensorCnt : INT := 0;
+	southLeftSensorCnt     : INT := 0;
+	eastStraightSensorCnt  : INT := 0;
+	eastLeftSensorCnt      : INT := 0;
+	westStraightSensorCnt  : INT := 0;
+	westLeftSensorCnt      : INT := 0;
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

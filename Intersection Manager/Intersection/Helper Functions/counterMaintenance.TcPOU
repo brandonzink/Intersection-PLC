@@ -10,52 +10,77 @@ END_VAR
 
 IF Glbl.northStraightSensor = FALSE AND Glbl.southStraightSensor = FALSE THEN
 	Glbl.state1Counter := 0;
+	Glbl.northStraightSensorCnt := 0;
+	Glbl.southStraightSensorCnt := 0;
 END_IF
 
 IF Glbl.eastStraightSensor = FALSE AND Glbl.westStraightSensor = FALSE THEN
 	Glbl.state2Counter := 0;
+	Glbl.eastStraightSensorCnt := 0;
+	Glbl.westStraightSensorCnt := 0;
 END_IF
 
 IF Glbl.northLeftSensor = FALSE AND Glbl.southLeftSensor = FALSE THEN
 	Glbl.state3Counter := 0;
+	Glbl.northLeftSensorCnt := 0;
+	Glbl.southLeftSensorCnt := 0;
 END_IF
 
 IF Glbl.eastLeftSensor = FALSE AND Glbl.westLeftSensor = FALSE THEN
 	Glbl.state4Counter := 0;
+	Glbl.eastLeftSensorCnt := 0;
+	Glbl.westLeftSensorCnt := 0;
 END_IF
 
 IF Glbl.northStraightSensor = FALSE AND Glbl.northLeftSensor = FALSE THEN
 	Glbl.state5Counter := 0;
+	Glbl.northStraightSensorCnt := 0;
+	Glbl.northLeftSensorCnt := 0;
 END_IF
 
 IF Glbl.southStraightSensor = FALSE AND Glbl.southLeftSensor = FALSE THEN
 	Glbl.state6Counter := 0;
+	Glbl.southStraightSensorCnt := 0;
+	Glbl.southLeftSensorCnt := 0;
 END_IF
 
 IF Glbl.eastStraightSensor = FALSE AND Glbl.eastLeftSensor = FALSE THEN
 	Glbl.state7Counter := 0;
+	Glbl.eastStraightSensorCnt := 0;
+	Glbl.eastLeftSensorCnt := 0;
 END_IF
 
 IF Glbl.westStraightSensor = FALSE AND Glbl.westLeftSensor = FALSE THEN
 	Glbl.state8Counter := 0;
+	Glbl.westStraightSensorCnt := 0;
+	Glbl.westLeftSensorCnt := 0;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="counterMaintenance">
       <LineId Id="12" Count="1" />
-      <LineId Id="5" Count="2" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="7" Count="0" />
       <LineId Id="9" Count="2" />
+      <LineId Id="44" Count="1" />
       <LineId Id="8" Count="0" />
       <LineId Id="19" Count="2" />
+      <LineId Id="46" Count="1" />
       <LineId Id="18" Count="0" />
       <LineId Id="23" Count="2" />
+      <LineId Id="48" Count="1" />
       <LineId Id="22" Count="0" />
       <LineId Id="27" Count="2" />
+      <LineId Id="50" Count="1" />
       <LineId Id="26" Count="0" />
       <LineId Id="31" Count="2" />
+      <LineId Id="52" Count="1" />
       <LineId Id="30" Count="0" />
       <LineId Id="35" Count="2" />
+      <LineId Id="54" Count="1" />
       <LineId Id="34" Count="0" />
       <LineId Id="39" Count="2" />
+      <LineId Id="56" Count="1" />
       <LineId Id="38" Count="0" />
     </LineIds>
   </POU>

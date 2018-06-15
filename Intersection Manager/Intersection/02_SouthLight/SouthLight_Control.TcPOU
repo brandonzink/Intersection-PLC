@@ -36,6 +36,7 @@ IF Glbl.southStraightActive = TRUE THEN			//If the straight light is set to be a
 			StraightRedLight := FALSE;
 			StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
 			Glbl.southStraightSensor := FALSE;		//Set the sensor to false
+			Glbl.southStraightSensorCnt := MAX(Glbl.southStraightSensorCnt-1, 0);		//Set the car counter to 0
 		ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
 			StraightGreenLight := FALSE;
 			StraightYellowLight := TRUE;
@@ -63,6 +64,7 @@ IF Glbl.southLeftActive = TRUE THEN			//If the left light is set to be active
 		LeftRedLight := FALSE;
 		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
 		Glbl.southLeftSensor := FALSE; 		//Set the sensor to false
+		Glbl.southLeftSensorCnt := MAX(Glbl.southLeftSensorCnt-1, 0);		//Set the car counter to 0
 	ELSIF LeftOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
 		LeftGreenLight := FALSE;
 		LeftYellowLight := TRUE;
@@ -79,12 +81,12 @@ END_IF
 
 //If the sensor is on and the light is off, incirment the waiting counters
 IF Glbl.southStraightSensor = TRUE AND Glbl.southStraightActive = FALSE THEN
-	Glbl.state1Counter := Glbl.state1Counter + 1;
-	Glbl.state6Counter := Glbl.state6Counter + 1;
+	Glbl.state1Counter := Glbl.state1Counter + Glbl.southStraightSensorCnt;
+	Glbl.state6Counter := Glbl.state6Counter + Glbl.southStraightSensorCnt;
 END_IF
 IF Glbl.southLeftSensor = TRUE AND Glbl.southLeftActive = FALSE THEN
-	Glbl.state3Counter := Glbl.state3Counter + 1;
-	Glbl.state6Counter := Glbl.state6Counter + 1;
+	Glbl.state3Counter := Glbl.state3Counter + Glbl.southLeftSensorCnt;
+	Glbl.state6Counter := Glbl.state6Counter + Glbl.southLeftSensorCnt;
 END_IF
 
 //Check to see if the crosswalk can be turned on
@@ -102,11 +104,15 @@ END_IF]]></ST>
       <LineId Id="108" Count="0" />
       <LineId Id="19" Count="4" />
       <LineId Id="83" Count="0" />
-      <LineId Id="25" Count="18" />
+      <LineId Id="25" Count="5" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="31" Count="12" />
       <LineId Id="106" Count="0" />
       <LineId Id="44" Count="5" />
       <LineId Id="84" Count="0" />
-      <LineId Id="50" Count="32" />
+      <LineId Id="50" Count="5" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="56" Count="26" />
       <LineId Id="102" Count="0" />
       <LineId Id="101" Count="0" />
       <LineId Id="5" Count="0" />
