@@ -20,24 +20,24 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Control for the straight light if active
-IF Glbl.eastStraightActive = TRUE THEN			//If the straight light is set to be active
-	IF StraightOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		//Glbl.state2Counter := Glbl.state2Counter - (Glbl.state2Counter/2);
-		//Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);		
+IF Glbl.eastStraightActive = TRUE THEN												//If the straight light is set to be active
+	IF StraightOnTimer = 0 THEN														//Take off half of the state counter when the light is activated
+		Glbl.state2Counter := Glbl.state2Counter - (Glbl.state2Counter/2);
+		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);		
 	END_IF
-	IF StraightOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+	IF StraightOnTimer <= 10 THEN													//If the light has been on for 10 seconds or less, make it green
 		StraightGreenLight := TRUE;
 		StraightYellowLight := FALSE;
 		StraightRedLight := FALSE;
-		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
-		Glbl.eastStraightSensor := FALSE;		//Set the sensor to false
-		Glbl.eastStraightSensorCnt := MAX(Glbl.eastStraightSensorCnt-1,0);		//Set the car counter to 0
-	ELSIF StraightOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		StraightOnTimer := StraightOnTimer + 1;										//Incriment the amount of time it has been on by 1
+		Glbl.eastStraightSensor := FALSE;											//Set the sensor to false
+		Glbl.eastStraightSensorCnt := MAX(Glbl.eastStraightSensorCnt-1,0);			//Set the car counter to 0
+	ELSIF StraightOnTimer <= 13 THEN												//If the light has been on for 11-13 seconds, make it yellow
 		StraightGreenLight := FALSE;
 		StraightYellowLight := TRUE;
 		StraightRedLight := FALSE;
-		StraightOnTimer := StraightOnTimer + 1;	//Incriment the amount of time it has been on by 1
-	ELSE										//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		StraightOnTimer := StraightOnTimer + 1;										//Incriment the amount of time it has been on by 1
+	ELSE																			//Once it is done, turn it to red and set it as inactive, reset timer to 0
 		StraightGreenLight := FALSE;
 		StraightYellowLight := FALSE;
 		StraightRedLight := TRUE;
@@ -47,24 +47,24 @@ IF Glbl.eastStraightActive = TRUE THEN			//If the straight light is set to be ac
 END_IF
 
 //Control for the left light if active
-IF Glbl.eastLeftActive = TRUE THEN			//If the left light is set to be active
-	IF LeftOnTimer = 0 THEN					//Take off half of the state counter when the light is activated
-		//Glbl.state4Counter := Glbl.state4Counter - (Glbl.state4Counter/2);
-		//Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);	
+IF Glbl.eastLeftActive = TRUE THEN													//If the left light is set to be active
+	IF LeftOnTimer = 0 THEN															//Take off half of the state counter when the light is activated
+		Glbl.state4Counter := Glbl.state4Counter - (Glbl.state4Counter/2);
+		Glbl.state7Counter := Glbl.state7Counter - (Glbl.state7Counter/2);	
 	END_IF
-	IF LeftOnTimer <= 10 THEN				//If the light has been on for 10 seconds or less, make it green
+	IF LeftOnTimer <= 10 THEN														//If the light has been on for 10 seconds or less, make it green
 		LeftGreenLight := TRUE;
 		LeftYellowLight := FALSE;
 		LeftRedLight := FALSE;
-		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
-		Glbl.eastLeftSensor := FALSE; 		//Set the sensor to false
-		Glbl.eastLeftSensorCnt := MAX(Glbl.eastLeftSensorCnt-1,0);		//Set the car counter to 0
-	ELSIF LeftOnTimer <= 13 THEN			//If the light has been on for 11-13 seconds, make it yellow
+		LeftOnTimer := LeftOnTimer + 1;												//Incriment the amount of time it has been on by 1
+		Glbl.eastLeftSensor := FALSE; 												//Set the sensor to false
+		Glbl.eastLeftSensorCnt := MAX(Glbl.eastLeftSensorCnt-1,0);					//Set the car counter to 0
+	ELSIF LeftOnTimer <= 13 THEN													//If the light has been on for 11-13 seconds, make it yellow
 		LeftGreenLight := FALSE;
 		LeftYellowLight := TRUE;
 		LeftRedLight := FALSE;
-		LeftOnTimer := LeftOnTimer + 1;	//Incriment the amount of time it has been on by 1
-	ELSE									//Once it is done, turn it to red and set it as inactive, reset timer to 0
+		LeftOnTimer := LeftOnTimer + 1;												//Incriment the amount of time it has been on by 1
+	ELSE																			//Once it is done, turn it to red and set it as inactive, reset timer to 0
 		LeftGreenLight := FALSE;
 		LeftYellowLight := FALSE;
 		LeftRedLight := TRUE;
@@ -74,16 +74,16 @@ IF Glbl.eastLeftActive = TRUE THEN			//If the left light is set to be active
 END_IF
 
 //If the sensor is on and the light is off, incirment the waiting counters
-IF Glbl.eastStraightSensor = TRUE AND Glbl.eastStraightActive = FALSE THEN
+IF Glbl.eastStraightSensor = TRUE AND Glbl.eastStraightActive = FALSE THEN			//Incriment the striaght counter
 	Glbl.state2Counter := Glbl.state2Counter + Glbl.eastStraightSensorCnt;
 	Glbl.state7Counter := Glbl.state7Counter + Glbl.eastStraightSensorCnt;
 END_IF
-IF Glbl.eastLeftSensor = TRUE AND Glbl.eastLeftActive = FALSE THEN
+IF Glbl.eastLeftSensor = TRUE AND Glbl.eastLeftActive = FALSE THEN					//Incriment the left counter
 	Glbl.state4Counter := Glbl.state4Counter + Glbl.eastLeftSensorCnt;
 	Glbl.state7Counter := Glbl.state7Counter + Glbl.eastLeftSensorCnt;
 END_IF
 
-//Check to see if the crosswalk can be turned on
+//Check to see if the crosswalk can be turned on based on the states of the other lights
 IF (Glbl.northStraightActive = TRUE AND Glbl.southStraightActive = TRUE) OR (Glbl.southStraightActive = TRUE AND Glbl.southLeftActive = TRUE) THEN
 	CrosswalkLight := TRUE;
 ELSE

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="errorChecking" Id="{c5a0547d-a931-4b92-94d1-e70f6d9d4270}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM errorChecking
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//If there are more than two lights active at any time
+IF (BOOL_TO_INT(Glbl.northStraightActive) + BOOL_TO_INT(Glbl.northLeftActive) + BOOL_TO_INT(Glbl.southStraightActive) + BOOL_TO_INT(Glbl.southLeftActive) + BOOL_TO_INT(Glbl.eastStraightActive) + BOOL_TO_INT(Glbl.eastLeftActive) + BOOL_TO_INT(Glbl.westStraightActive) + BOOL_TO_INT(Glbl.westLeftActive)) > 2 THEN
+	Glbl.error := TRUE;
+	Glbl.errorMsg := 'Too many lights active';
+END_IF
+
+//Checks to make sure that there are no lights that would interfere with a crosswalk being on
+crosswalkErrorChecks();
+
+//Checks to make sure that there are no lights that would interfere with another light being on
+lightComboErrorChecks();]]></ST>
+    </Implementation>
+    <LineIds Name="errorChecking">
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

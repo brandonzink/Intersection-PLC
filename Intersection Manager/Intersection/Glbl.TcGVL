@@ -15,14 +15,14 @@ VAR_GLOBAL
 	westLeftActive      : BOOL := FALSE;
 	
 	//These track the 'how long waiting' for each light combo (state)
-	state1Counter : DINT := 0; //North Straight and South Straight
-	state2Counter : DINT := 0; //East Straight and West Straight
-	state3Counter : DINT := 0; //North Left and South Left
-	state4Counter : DINT := 0; //East Left and West Left
-	state5Counter : DINT := 0; //North Straight and Left
-	state6Counter : DINT := 0; //South Straight and Left
-	state7Counter : DINT := 0; //East Straight and Left
-	state8Counter : DINT := 0; //West Straight and Left
+	state1Counter : DINT := 0; 							//North Straight and South Straight
+	state2Counter : DINT := 0; 							//East Straight and West Straight
+	state3Counter : DINT := 0; 							//North Left and South Left
+	state4Counter : DINT := 0; 							//East Left and West Left
+	state5Counter : DINT := 0; 							//North Straight and Left
+	state6Counter : DINT := 0; 							//South Straight and Left
+	state7Counter : DINT := 0; 							//East Straight and Left
+	state8Counter : DINT := 0; 							//West Straight and Left
 	
 	//Sensors that indicate 'there is a car here'
 	northStraightSensor : BOOL := FALSE;
@@ -43,6 +43,10 @@ VAR_GLOBAL
 	eastLeftSensorCnt      : INT := 0;
 	westStraightSensorCnt  : INT := 0;
 	westLeftSensorCnt      : INT := 0;
+	
+	//If there is an error (as defined in errorChecking()), this will be true
+	error : BOOL := FALSE;
+	errorMsg : STRING := 'NULL'; //Contains a message about the error, if applicable
 	
 END_VAR]]></Declaration>
   </GVL>

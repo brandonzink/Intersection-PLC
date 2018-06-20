@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="errorShutdown" Id="{6b47d90c-6e80-48fd-b748-5a86d791bab7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM errorShutdown
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Set all of the lights to false
+Glbl.northStraightActive := FALSE;
+Glbl.northLeftActive := FALSE;
+Glbl.southStraightActive := FALSE;
+Glbl.southLeftActive := FALSE;
+Glbl.eastStraightActive := FALSE;
+Glbl.eastLeftActive := FALSE;
+Glbl.westStraightActive := FALSE;
+Glbl.westLeftActive := FALSE;
+
+
+//Turn all the lights to red, turn the crosswalks to red, make sure no cars can go until the error is resolved
+NorthLight_Control.StraightGreenLight := FALSE;
+NorthLight_Control.StraightYellowLight := FALSE;
+NorthLight_Control.StraightRedLight := TRUE;
+NorthLight_Control.LeftGreenLight := FALSE;
+NorthLight_Control.LeftYellowLight := FALSE;
+NorthLight_Control.LeftRedLight := TRUE;
+NorthLight_Control.CrosswalkLight := FALSE;
+
+SouthLight_Control.StraightGreenLight := FALSE;
+SouthLight_Control.StraightYellowLight := FALSE;
+SouthLight_Control.StraightRedLight := TRUE;
+SouthLight_Control.LeftGreenLight := FALSE;
+SouthLight_Control.LeftYellowLight := FALSE;
+SouthLight_Control.LeftRedLight := TRUE;
+SouthLight_Control.CrosswalkLight := FALSE;
+
+EastLight_Control.StraightGreenLight := FALSE;
+EastLight_Control.StraightYellowLight := FALSE;
+EastLight_Control.StraightRedLight := TRUE;
+EastLight_Control.LeftGreenLight := FALSE;
+EastLight_Control.LeftYellowLight := FALSE;
+EastLight_Control.LeftRedLight := TRUE;
+EastLight_Control.CrosswalkLight := FALSE;
+
+WestLight_Control.StraightGreenLight := FALSE;
+WestLight_Control.StraightYellowLight := FALSE;
+WestLight_Control.StraightRedLight := TRUE;
+WestLight_Control.LeftGreenLight := FALSE;
+WestLight_Control.LeftYellowLight := FALSE;
+WestLight_Control.LeftRedLight := TRUE;
+WestLight_Control.CrosswalkLight := FALSE;]]></ST>
+    </Implementation>
+    <LineIds Name="errorShutdown">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="6" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="32" Count="6" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="40" Count="6" />
+      <LineId Id="39" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

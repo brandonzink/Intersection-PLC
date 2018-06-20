@@ -6,56 +6,63 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//If all of the lights are currently red, then decide which light to activate based on the state counters as defined in the Glbl varaible list
-IF Glbl.northStraightActive = FALSE AND Glbl.northLeftActive = FALSE AND Glbl.southStraightActive = FALSE AND Glbl.southLeftActive = FALSE AND Glbl.eastStraightActive = FALSE AND Glbl.eastLeftActive = FALSE AND Glbl.westStraightActive = FALSE AND Glbl.westLeftActive = FALSE THEN
-	IF Glbl.state1Counter = maximum() THEN //Turn on North and South Straight lights
-		Glbl.northStraightActive := TRUE;
-		Glbl.southStraightActive := TRUE;
-		Glbl.state1Counter := 0;
-	ELSIF Glbl.state2Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.eastStraightSensor = TRUE) THEN //Turn on East and West Straight lights
-		Glbl.eastStraightActive := TRUE;
-		Glbl.westStraightActive := TRUE;
-		Glbl.state2Counter := 0;
-	ELSIF Glbl.state3Counter = maximum() AND (Glbl.northLeftSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on North and South left lights
-		Glbl.northLeftActive := TRUE;
-		Glbl.southLeftActive := TRUE;
-		Glbl.state3Counter := 0;
-	ELSIF Glbl.state4Counter = maximum() AND (Glbl.westLeftSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East and West Left lights
-		Glbl.eastLeftActive := TRUE;
-		Glbl.westLeftActive := TRUE;
-		Glbl.state4Counter := 0;
-	ELSIF Glbl.state5Counter = maximum() AND (Glbl.northStraightSensor = TRUE OR Glbl.northLeftSensor = TRUE) THEN //Turn on North Left and Straight lights
-		Glbl.northStraightActive := TRUE;
-		Glbl.northLeftActive := TRUE;
-		Glbl.state5Counter := 0;
-	ELSIF Glbl.state6Counter = maximum() AND (Glbl.southStraightSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on South Left and Straight lights
-		Glbl.southStraightActive := TRUE;
-		Glbl.southLeftActive := TRUE;
-		Glbl.state6Counter := 0;
-	ELSIF Glbl.state7Counter = maximum() AND (Glbl.eastStraightSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East Left and Straight lights
-		Glbl.eastStraightActive := TRUE;
-		Glbl.eastLeftActive := TRUE;
-		Glbl.state7Counter := 0;
-	ELSIF Glbl.state8Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.westLeftSensor = TRUE) THEN //Turn on West Left and Straight lights
-		Glbl.westStraightActive := TRUE;
-		Glbl.westLeftActive := TRUE;
-		Glbl.state8Counter := 0;
+      <ST><![CDATA[//If there is no error, run the code
+IF Glbl.error = FALSE THEN
+	//If all of the lights are currently red, then decide which light to activate based on the state counters as defined in the Glbl varaible list
+	IF Glbl.northStraightActive = FALSE AND Glbl.northLeftActive = FALSE AND Glbl.southStraightActive = FALSE AND Glbl.southLeftActive = FALSE AND Glbl.eastStraightActive = FALSE AND Glbl.eastLeftActive = FALSE AND Glbl.westStraightActive = FALSE AND Glbl.westLeftActive = FALSE THEN
+		IF Glbl.state1Counter = maximum() THEN //Turn on North and South Straight lights
+			Glbl.northStraightActive := TRUE;
+			Glbl.southStraightActive := TRUE;
+			Glbl.state1Counter := 0;
+		ELSIF Glbl.state2Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.eastStraightSensor = TRUE) THEN //Turn on East and West Straight lights
+			Glbl.eastStraightActive := TRUE;
+			Glbl.westStraightActive := TRUE;
+			Glbl.state2Counter := 0;
+		ELSIF Glbl.state3Counter = maximum() AND (Glbl.northLeftSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on North and South left lights
+			Glbl.northLeftActive := TRUE;
+			Glbl.southLeftActive := TRUE;
+			Glbl.state3Counter := 0;
+		ELSIF Glbl.state4Counter = maximum() AND (Glbl.westLeftSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East and West Left lights
+			Glbl.eastLeftActive := TRUE;
+			Glbl.westLeftActive := TRUE;
+			Glbl.state4Counter := 0;
+		ELSIF Glbl.state5Counter = maximum() AND (Glbl.northStraightSensor = TRUE OR Glbl.northLeftSensor = TRUE) THEN //Turn on North Left and Straight lights
+			Glbl.northStraightActive := TRUE;
+			Glbl.northLeftActive := TRUE;
+			Glbl.state5Counter := 0;
+		ELSIF Glbl.state6Counter = maximum() AND (Glbl.southStraightSensor = TRUE OR Glbl.southLeftSensor = TRUE) THEN //Turn on South Left and Straight lights
+			Glbl.southStraightActive := TRUE;
+			Glbl.southLeftActive := TRUE;
+			Glbl.state6Counter := 0;
+		ELSIF Glbl.state7Counter = maximum() AND (Glbl.eastStraightSensor = TRUE OR Glbl.eastLeftSensor = TRUE) THEN //Turn on East Left and Straight lights
+			Glbl.eastStraightActive := TRUE;
+			Glbl.eastLeftActive := TRUE;
+			Glbl.state7Counter := 0;
+		ELSIF Glbl.state8Counter = maximum() AND (Glbl.westStraightSensor = TRUE OR Glbl.westLeftSensor = TRUE) THEN //Turn on West Left and Straight lights
+			Glbl.westStraightActive := TRUE;
+			Glbl.westLeftActive := TRUE;
+			Glbl.state8Counter := 0;
+		END_IF
 	END_IF
-END_IF
-
-//Sets random sensors off
-RandomSensors();
-
-//Maintains the part of the counters that fall through the cracks
-counterMaintenance();
-
-//Call each of the lights POUs
-NorthLight_Control();
-SouthLight_Control();
-EastLight_Control();
-WestLight_Control();]]></ST>
+	
+	//Sets random sensors off
+	randomSensors();
+	
+	//Maintains the part of the counters that fall through the cracks
+	counterMaintenance();
+	
+	//Call each of the lights POUs
+	NorthLight_Control();
+	SouthLight_Control();
+	EastLight_Control();
+	WestLight_Control();
+ELSE
+	//Run the program to shut down system in event of an error
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="63" Count="0" />
+      <LineId Id="62" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="2" Count="0" />
       <LineId Id="6" Count="0" />
@@ -94,6 +101,7 @@ WestLight_Control();]]></ST>
       <LineId Id="34" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="2" />
+      <LineId Id="64" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>
